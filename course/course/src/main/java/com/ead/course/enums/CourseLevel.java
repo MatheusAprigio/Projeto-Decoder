@@ -1,6 +1,6 @@
 package com.ead.course.enums;
 
-public enum CouseLevel {
+public enum CourseLevel {
     BEGGINER,
     INTERMEDIARY,
     ADVANCED;
