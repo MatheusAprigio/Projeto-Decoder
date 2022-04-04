@@ -15,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,6 +35,13 @@ public class UserController {
                                                        @PageableDefault(page = 0, size = 10, sort = "userid", direction = Sort.Direction.ASC) Pageable pageable){
 
         Page<UserModel> userModelPage = userService.findAll(spec, pageable);
+
+        if (!userModelPage.isEmpty()){
+            for (UserModel user: userModelPage.toList()) {
+                user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserid())).withSelfRel());
+            }
+        }
+        
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 
