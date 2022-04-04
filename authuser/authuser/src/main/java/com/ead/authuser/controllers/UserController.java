@@ -38,7 +38,7 @@ public class UserController {
 
         if (!userModelPage.isEmpty()){
             for (UserModel user: userModelPage.toList()) {
-                user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserid())).withSelfRel());
+                user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserId())).withSelfRel());
             }
         }
         
