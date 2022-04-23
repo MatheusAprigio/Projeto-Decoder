@@ -23,6 +23,8 @@ import java.time.ZoneId;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthenticationController {
 
+    Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
     @Autowired
     UserService userService;
 
