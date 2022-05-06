@@ -1,8 +1,9 @@
-package com.ead.authuser.clients;
+package com.ead.course.clients;
 
-import com.ead.authuser.dtos.CourseDto;
-import com.ead.authuser.dtos.ResponsePageDto;
-import com.ead.authuser.services.UtilsService;
+import com.ead.course.dtos.ResponsePageDto;
+import com.ead.course.dtos.UserDto;
+import com.ead.course.services.UtilsService;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,9 +18,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.UUID;
 
-@Component
 @Log4j2
-public class UserClient {
+@Component
+public class CourseClient {
 
     @Autowired
     RestTemplate restTemplate;
@@ -27,22 +28,23 @@ public class UserClient {
     @Autowired
     UtilsService utilsService;
 
-    String REQUEST_URI = "http://localhost:8082";
-    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable){
-        List<CourseDto> searchResult = null;
-        ResponseEntity<ResponsePageDto<CourseDto>> result = null;
-        String url = utilsService.createUrl(userId, pageable);
+    String REQUEST_URI = "http://localhost:8087";
+    public Page<UserDto> getAllUsersByCourse(UUID courseId, Pageable pageable){
+        List<UserDto> searchResult = null;
+        ResponseEntity<ResponsePageDto<UserDto>> result = null;
+        String url = utilsService.createUrl(courseId, pageable);
         log.debug("Request URL: {} ", url);
         log.info("Request URL: {} ", url);
         try{
-            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {};
+            ParameterizedTypeReference<ResponsePageDto<UserDto>> responseType = new ParameterizedTypeReference<ResponsePageDto<UserDto>>() {};
             result = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
             searchResult = result.getBody().getContent();
             log.debug("Response Number of Elements: {} ", searchResult.size());
         } catch (HttpStatusCodeException e){
             log.error("Error request /courses {} ", e);
         }
-        log.info("Ending request /courses userId {} ", userId);
+        log.info("Ending request /courses courseId {} ", courseId);
         return result.getBody();
     }
+
 }
