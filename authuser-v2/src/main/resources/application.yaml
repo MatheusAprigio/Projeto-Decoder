@@ -9,7 +9,7 @@ spring:
   datasource:
     url:  jdbc:postgresql://localhost:5432/ead-authuser-v2
     username: postgres
-    password: banco123
+    password: admin
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,7 +25,6 @@ spring:
   rabbitmq:
     addresses: amqps://shteaona:SXPDamQxdOqxvVuMFFs-rQ0JCdblMkgB@woodpecker.rmq.cloudamqp.com/shteaona
 
-
 logging:
   level:
     com.ead: TRACE
@@ -37,6 +36,9 @@ ead:
   api:
     url:
       course: 'http://ead-course-service/ead-course'
+  broker:
+    exchange:
+      userEvent: ead.userevent
 
 eureka:
   client:
