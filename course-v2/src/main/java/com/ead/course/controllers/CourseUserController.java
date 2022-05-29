@@ -48,6 +48,6 @@ public class CourseUserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         }
         //verificações state tranfer
-        return ResponseEntity.status(HttpStatus.CREATED).body("");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Subscription created successfully.");
     }
 }
